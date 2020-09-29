@@ -1,0 +1,33 @@
+@import "../../../scss/variables";
+.NavLinksWrapper {
+  width: 30rem;
+}
+ul.NavLinks {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  li {
+    list-style-type: none;
+  }
+}
+.NavLink {
+  color: #fff;
+  display: inline-block;
+  font-size: 1.6rem;
+  transition: all 0.5s;
+  &:hover {
+    color: $color-blue;
+  }
+  &:active {
+    color: $color-blue;
+  }
+}
+
+@media (max-width: 400px) {
+  .NavLink {
+    font-size: 15px;
+  }
+}
