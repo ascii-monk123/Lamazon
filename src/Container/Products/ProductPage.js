@@ -29,16 +29,18 @@ class ProductPage extends Component {
         <Container>
           <br />
           <br />
-          <div class="ui horizontal divider">
+          <div className="ui horizontal divider">
             <h1
               style={{
-                fontSize: "29px",
+                fontSize: "23px",
                 color: " #7bed9f",
                 fontWeight: "100",
               }}
             >
               Our Products
             </h1>
+            <br />
+            <br />
             <br />
           </div>
 

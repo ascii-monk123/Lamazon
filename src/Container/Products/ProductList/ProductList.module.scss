@@ -4,9 +4,9 @@
 .ProductCard {
   cursor: pointer;
   transition: all 0.5s !important;
-  height: 40rem !important;
   box-shadow: none !important;
   border: 1px solid #ccc;
+  height: "60rem";
 
   &:hover {
     transform: translateY(-10px);

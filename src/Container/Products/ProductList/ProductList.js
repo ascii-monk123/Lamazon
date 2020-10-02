@@ -1,6 +1,6 @@
 import React from "react";
 import Classes from "./ProductList.module.scss";
-import { Card, Container, Icon, Image } from "semantic-ui-react";
+import { Card, Container, Icon, Image, Button } from "semantic-ui-react";
 import uniqid from "uniqid";
 
 const ProductList = (props) => {
@@ -16,43 +16,46 @@ const ProductList = (props) => {
     items = 1;
   }
   const dup = [...products];
-  for (let i = 0; i < 5; i++) {
-    dup.push(dup[0]);
-  }
+
   return (
     <div className={Classes.ProductList}>
-      <Container>
-        <div className="ui grid">
-          <Card.Group itemsPerRow={items}>
-            {dup.map((product) => (
-              <Card key={uniqid()} className={Classes.ProductCard}>
-                <Card.Content
-                  style={{
-                    height: "300px",
-                    backgroundImage: `url(${product.images[0]})`,
-                    backgroundSize: "cover",
-                  }}
-                ></Card.Content>
-                <Card.Content>
-                  <Card.Header>{product.company}</Card.Header>
-                  <Card.Description>{product.title}</Card.Description>
-                  <Card.Description style={{ marginTop: "10px" }}>
-                    <p style={{ fontSize: "20px" }}>
-                      <b>{`$ ${product.price}`}</b>
-                    </p>
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <a>
-                    <Icon name="user" />
-                    Add to cart
-                  </a>
-                </Card.Content>
-              </Card>
-            ))}
-          </Card.Group>
-        </div>
-      </Container>
+      <Card.Group itemsPerRow={items}>
+        {dup.map((product) => (
+          <Card
+            key={uniqid()}
+            className={Classes.ProductCard}
+            style={{
+              marginBottom: "30px",
+              height: "500px",
+            }}
+          >
+            <Image
+              src={`${product.images[0]}`}
+              fluid
+              style={{ height: "70%", width: "100%" }}
+            />
+
+            <Card.Content>
+              <Card.Header>{product.company}</Card.Header>
+              <Card.Description style={{ fontSize: "12px" }}>
+                {product.title}
+              </Card.Description>
+              <Card.Description style={{ marginTop: "10px" }}>
+                <p style={{ fontSize: "10px" }}>
+                  <b>{`$ ${product.price}`}</b>
+                </p>
+              </Card.Description>
+            </Card.Content>
+
+            <Button animated="vertical" color="green" size="huge">
+              <Button.Content hidden>Add to cart</Button.Content>
+              <Button.Content visible>
+                <Icon name="shop" />
+              </Button.Content>
+            </Button>
+          </Card>
+        ))}
+      </Card.Group>
     </div>
   );
 };
