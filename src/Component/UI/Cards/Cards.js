@@ -5,6 +5,20 @@ import { NavLink } from "react-router-dom";
 
 const Cards = (props) => {
   const { product } = props;
+  const { isInCart } = product;
+  let disable = false;
+  let btnContent = (
+    <React.Fragment>
+      <Button.Content hidden>Add to cart</Button.Content>
+      <Button.Content visible>
+        <Icon name="shop" />
+      </Button.Content>
+    </React.Fragment>
+  );
+  if (isInCart) {
+    disable = true;
+    btnContent = <Button.Content>Added To Cart</Button.Content>;
+  }
   return (
     <React.Fragment>
       <Card
@@ -15,7 +29,9 @@ const Cards = (props) => {
         }}
       >
         <NavLink
-          to="/product"
+          to={{
+            pathname: `/product/${product.id}`,
+          }}
           exact={true}
           style={{ height: "70%", width: "100%" }}
         >
@@ -38,11 +54,13 @@ const Cards = (props) => {
           </Card.Description>
         </Card.Content>
 
-        <Button animated="vertical" color="green" size="huge">
-          <Button.Content hidden>Add to cart</Button.Content>
-          <Button.Content visible>
-            <Icon name="shop" />
-          </Button.Content>
+        <Button
+          animated="vertical"
+          color="green"
+          size="huge"
+          disabled={disable ? true : false}
+        >
+          {btnContent}
         </Button>
       </Card>
     </React.Fragment>

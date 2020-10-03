@@ -14,12 +14,12 @@ class ProductPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
-    if (this.props.products && this.props.localProducts.length === 0) {
+    if (this.props.products && !this.props.localProducts) {
       this.props.getProducts(this.props.products);
     }
   }
   componentDidUpdate() {
-    if (this.props.products && this.props.localProducts.length === 0) {
+    if (this.props.products && !this.props.localProducts) {
       this.props.getProducts(this.props.products);
     }
   }
@@ -39,7 +39,7 @@ class ProductPage extends Component {
         </Dimmer>
       </Container>
     );
-    const { products } = this.props;
+    const { products, localProducts } = this.props;
 
     return (
       <React.Fragment>
@@ -61,8 +61,8 @@ class ProductPage extends Component {
             <br />
           </div>
 
-          {products ? (
-            <ProductList width={this.state.width} products={products} />
+          {localProducts ? (
+            <ProductList width={this.state.width} products={localProducts} />
           ) : (
             Spinner
           )}
