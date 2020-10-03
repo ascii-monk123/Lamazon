@@ -16,6 +16,7 @@ import {
 import fbconfig from "./config/fbconfig";
 import rootReducer from "./store/reducers/rootReducer";
 import thunk from "redux-thunk";
+import { BrowserRouter } from "react-router-dom";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
@@ -35,7 +36,9 @@ const rrfProps = {
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ReactReduxFirebaseProvider>
   </Provider>,
 

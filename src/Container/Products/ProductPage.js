@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import ProductList from "./ProductList/ProductList";
+import { Dimmer, Loader } from "semantic-ui-react";
+import * as actions from "../../store/actions/actionCreaters/exporter";
 
 class ProductPage extends Component {
   state = { width: 0 };
@@ -12,6 +14,14 @@ class ProductPage extends Component {
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
+    if (this.props.products && this.props.localProducts.length === 0) {
+      this.props.getProducts(this.props.products);
+    }
+  }
+  componentDidUpdate() {
+    if (this.props.products && this.props.localProducts.length === 0) {
+      this.props.getProducts(this.props.products);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWindowDimensions);
@@ -22,6 +32,13 @@ class ProductPage extends Component {
     });
   };
   render() {
+    const Spinner = (
+      <Container>
+        <Dimmer active>
+          <Loader size="huge">Loading</Loader>
+        </Dimmer>
+      </Container>
+    );
     const { products } = this.props;
 
     return (
@@ -46,7 +63,9 @@ class ProductPage extends Component {
 
           {products ? (
             <ProductList width={this.state.width} products={products} />
-          ) : null}
+          ) : (
+            Spinner
+          )}
         </Container>
       </React.Fragment>
     );
@@ -55,11 +74,17 @@ class ProductPage extends Component {
 const mapStateToProps = (state) => {
   return {
     products: state.firestore.ordered.products,
+    localProducts: state.products.products,
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProducts: (products) => dispatch(actions.getProducts(products)),
+  };
+};
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{ collection: "products" }])
 )(ProductPage);
 //firestore connect to the projects collection i.e when this component is active ,we will connect to the products collection in the firestore

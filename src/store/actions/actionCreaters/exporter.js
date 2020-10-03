@@ -1,1 +1,1 @@
-
+export { getProducts } from "./productActions";
