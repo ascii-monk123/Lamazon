@@ -1,3 +1,51 @@
+@import "../../../scss/variables";
 .ProductDetails {
   width: 100%;
+  margin-top: 10rem;
+}
+.ImageColumn {
+  margin-top: 2rem !important;
+  cursor: zoom-in;
+  overflow: hidden !important;
+}
+.ProductImage {
+  height: 45rem !important;
+  transition: all 0.5s;
+  opacity: 0.9;
+  &:hover {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+.Description {
+  font-size: 2rem;
+  color: $color-grey-light;
+}
+.Price {
+  font-size: 3rem;
+  font-weight: bold;
+  color: $color-grey;
+}
+.taxText {
+  color: $color-green-dark;
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 988px) {
+  .Details {
+    margin-top: 6rem !important;
+  }
+}
+
+@media (max-width: 744px) {
+  .ImageColumn {
+    height: 40rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .ImageColumn {
+    height: 30rem !important;
+  }
 }
