@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Classes from "./ProductDetails.module.scss";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+
 import {
   Container,
   Grid,
@@ -11,15 +14,30 @@ import {
   Divider,
   List,
   Rating,
+  Dimmer,
+  Loader,
 } from "semantic-ui-react";
 
 class ProductDetails extends Component {
+  state = {
+    productId: "",
+  };
   componentDidMount() {}
   render() {
     if (!this.props.products) {
       // return <Redirect to="/" />;
       console.log("hi");
     }
+    if (!this.props.product) {
+      return (
+        <Container>
+          <Dimmer active>
+            <Loader size="huge">Loading</Loader>
+          </Dimmer>
+        </Container>
+      );
+    }
+    const { product } = this.props;
     return (
       <React.Fragment>
         <div className={Classes.ProductDetails}>
@@ -40,7 +58,7 @@ class ProductDetails extends Component {
                       mobile={8}
                     >
                       <Image
-                        src="https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/9713947/2020/9/21/43b643db-133c-4a5d-b275-f4c8f528bfa11600665382145-Roadster-Men-Green-Regular-Fit-Solid-Casual-Shirt-7471600665-1.jpg"
+                        src={`${product.images[0]}`}
                         size="medium"
                         className={Classes.ProductImage}
                       />
@@ -52,7 +70,7 @@ class ProductDetails extends Component {
                       mobile={8}
                     >
                       <Image
-                        src="https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/9713947/2020/9/21/8bfd830e-9853-4984-aba6-dc9d00008d351600665382104-Roadster-Men-Green-Regular-Fit-Solid-Casual-Shirt-7471600665-2.jpg"
+                        src={`${product.images[1]}`}
                         size="medium"
                         className={Classes.ProductImage}
                       />
@@ -64,7 +82,7 @@ class ProductDetails extends Component {
                       mobile={8}
                     >
                       <Image
-                        src="https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/9713947/2020/9/21/6279ac4d-2e58-4317-8398-c1d158e57c9f1600665382057-Roadster-Men-Green-Regular-Fit-Solid-Casual-Shirt-7471600665-3.jpg"
+                        src={`${product.images[2]}`}
                         size="medium"
                         className={Classes.ProductImage}
                       />
@@ -76,7 +94,7 @@ class ProductDetails extends Component {
                       mobile={8}
                     >
                       <Image
-                        src="https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/9713947/2020/9/21/44b11d6f-40a6-48d9-b38c-212d265cbe491600665381902-Roadster-Men-Green-Regular-Fit-Solid-Casual-Shirt-7471600665-6.jpg"
+                        src={`${product.images[3]}`}
                         size="medium"
                         className={Classes.ProductImage}
                       />
@@ -97,13 +115,11 @@ class ProductDetails extends Component {
                       fontSize: "30px",
                     }}
                   >
-                    Roadster
+                    {product.company}
                   </h1>
-                  <p className={Classes.Description}>
-                    Men Olive Green Regular Fit Solid Casual Shirt
-                  </p>
+                  <p className={Classes.Description}>{product.title}</p>
                   <br />
-                  <p className={Classes.Price}>$ 45.75</p>
+                  <p className={Classes.Price}>$ {product.price}</p>
                   <p className={Classes.taxText}>Inclusive of all taxes</p>
                   <br />
                   <Button fluid color="green" size="huge" animated="vertical">
@@ -124,26 +140,30 @@ class ProductDetails extends Component {
                   <br />
                   <List celled style={{ fontSize: "17px", color: "#777" }}>
                     <List.Item style={{ padding: "5px 0" }}>
-                      <List.Content>Company: Roadster</List.Content>
+                      <List.Content>Company: {product.company}</List.Content>
                     </List.Item>
                     <List.Item style={{ padding: "5px 0" }}>
-                      <List.Content>Manufacturer : Roadster India</List.Content>
+                      <List.Content>
+                        Manufacturer : {product.manufacturer}
+                      </List.Content>
                     </List.Item>
                     <List.Item style={{ padding: "5px 0" }}>
-                      <List.Content>Type : Fashion</List.Content>
+                      <List.Content>Type : {product.type}</List.Content>
                     </List.Item>
                     <List.Item style={{ padding: "5px 0" }}>
-                      <List.Content>Weight : 100g</List.Content>
+                      <List.Content>Weight : {product.weight}</List.Content>
                     </List.Item>
                     <List.Item style={{ padding: "5px 0" }}>
-                      <List.Content>Country Of Origin : India</List.Content>
+                      <List.Content>
+                        Country Of Origin : {product.country_of_origin}
+                      </List.Content>
                     </List.Item>
                     <List.Item style={{ padding: "5px 0" }}>
                       <List.Content>
                         Ratings:{" "}
                         <Rating
                           icon="star"
-                          defaultRating={4.5}
+                          defaultRating={product.ratings}
                           maxRating={5}
                           disabled
                         ></Rating>
@@ -160,11 +180,22 @@ class ProductDetails extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.id;
+  const products = state.firestore.data.products;
+  const product = products ? products[id] : null;
   return {
     currentProduct: state.products.currentProduct,
     products: state.products.products,
+    product: product,
   };
 };
 
-export default connect(mapStateToProps)(ProductDetails);
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect([{ collection: "products" }])
+)(ProductDetails);
