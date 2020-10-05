@@ -24,7 +24,6 @@ class ProductDetails extends Component {
     productId: "",
   };
   added = (product) => {
-    console.log(product);
     this.props.addToCart(product);
     this.props.addedToCart(this.props.id);
   };
@@ -39,22 +38,22 @@ class ProductDetails extends Component {
       );
     }
     const { product, selectedProduct } = this.props;
-    let button = (
-      <Button
-        fluid
-        color="green"
-        size="huge"
-        animated="vertical"
-        onClick={() => this.added(product)}
-      >
-        <Button.Content visible>Add to cart</Button.Content>
-        <Button.Content hidden>
-          <Icon name="shop"></Icon>
-        </Button.Content>
-      </Button>
-    );
+    let button = null;
     if (selectedProduct) {
-      console.log(selectedProduct[0].isInCart);
+      button = (
+        <Button
+          fluid
+          color="green"
+          size="huge"
+          animated="vertical"
+          onClick={() => this.added(selectedProduct[0])}
+        >
+          <Button.Content visible>Add to cart</Button.Content>
+          <Button.Content hidden>
+            <Icon name="shop"></Icon>
+          </Button.Content>
+        </Button>
+      );
       if (selectedProduct[0].isInCart) {
         button = (
           <Button disabled fluid color="red" size="huge">
@@ -204,10 +203,10 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const products = state.firestore.data.products;
   const product = products ? products[id] : null;
-  const selectedProduct =
-    state.products.products && product
-      ? state.products.products.filter((product) => product.id === id)
-      : null;
+  const selectedProduct = state.products.products
+    ? state.products.products.filter((pro) => pro.id === id)
+    : null;
+  console.log(selectedProduct);
   return {
     product: product,
     selectedProduct: selectedProduct,

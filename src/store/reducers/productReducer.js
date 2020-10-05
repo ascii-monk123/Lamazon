@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
         if (product.id === action.id)
           return {
             ...product,
-            isInCart: !product.isInCart,
+            isInCart: true,
           };
         else
           return {
@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
         if (product.id === action.id)
           return {
             ...product,
-            isInCart: !product.isInCart,
+            isInCart: false,
           };
         else
           return {
