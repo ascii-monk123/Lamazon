@@ -28,7 +28,6 @@ class ProductDetails extends Component {
     this.props.addToCart(product);
     this.props.addedToCart(this.props.id);
   };
-  componentDidMount() {}
   render() {
     if (!this.props.product) {
       return (
@@ -41,10 +40,14 @@ class ProductDetails extends Component {
     }
     const { product, selectedProduct } = this.props;
     let button = (
-      <Button fluid color="green" size="huge" animated="vertical">
-        <Button.Content visible onClick={() => this.added(product)}>
-          Add to cart
-        </Button.Content>
+      <Button
+        fluid
+        color="green"
+        size="huge"
+        animated="vertical"
+        onClick={() => this.added(product)}
+      >
+        <Button.Content visible>Add to cart</Button.Content>
         <Button.Content hidden>
           <Icon name="shop"></Icon>
         </Button.Content>
@@ -201,9 +204,10 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const products = state.firestore.data.products;
   const product = products ? products[id] : null;
-  const selectedProduct = state.products.products
-    ? state.products.products.filter((product) => product.id === id)
-    : null;
+  const selectedProduct =
+    state.products.products && product
+      ? state.products.products.filter((product) => product.id === id)
+      : null;
   return {
     product: product,
     selectedProduct: selectedProduct,
