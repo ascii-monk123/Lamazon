@@ -11,3 +11,15 @@ export const getProducts = (products) => {
     dispatch(setProducts(products));
   };
 };
+
+export const addedToCart = (id) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.ADDED_TO_CART, id: id });
+  };
+};
+
+export const removedFromCart = (id) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.REMOVED_FROM_CART, id: id });
+  };
+};

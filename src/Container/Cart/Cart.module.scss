@@ -1,0 +1,24 @@
+@import "../../scss/variables";
+.Container {
+  margin: 10rem auto;
+  width: 95%;
+}
+
+.CartTitle {
+  font-size: 2.4rem;
+  text-transform: capitalize;
+  color: $color-grey-light;
+  text-align: center;
+  font-weight: 200;
+}
+.greenText {
+  color: $color-green;
+}
+
+.ProductTitle {
+  font-size: 1.3rem;
+}
+.ProductRetail {
+  font-size: 1.2rem;
+  color: $color-grey-light;
+}

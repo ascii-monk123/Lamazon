@@ -1,15 +1,19 @@
 import React from "react";
 import Classes from "./SignedOutLinks.module.scss";
 import { FaShoppingCart } from "react-icons/fa";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 const signedOutLinks = (props) => {
   return (
     <div className={Classes.NavLinksWrapper}>
       <ul className={Classes.NavLinks}>
         <li>
-          <a href="/" className={Classes.NavLink}>
-            <FaShoppingCart />
-          </a>
-          <a className="ui red circular label">0</a>
+          <Link to="/cart">
+            <p className={Classes.NavLink}>
+              <FaShoppingCart />
+              <i className="ui red circular label">{props.cartCount}</i>
+            </p>
+          </Link>
         </li>
         <li>
           <a href="/" className={Classes.NavLink}>
@@ -26,4 +30,10 @@ const signedOutLinks = (props) => {
   );
 };
 
-export default signedOutLinks;
+const mapStateToProps = (state) => {
+  return {
+    cartCount: state.cart.total,
+  };
+};
+
+export default connect(mapStateToProps)(signedOutLinks);

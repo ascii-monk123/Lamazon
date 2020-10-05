@@ -2,8 +2,13 @@ import React from "react";
 import Classes from "./Cards.module.scss";
 import { Card, Icon, Image, Button } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
-
+import * as actions from "../../../store/actions/actionCreaters/exporter";
+import { connect } from "react-redux";
 const Cards = (props) => {
+  const addToCart = () => {
+    props.addToCart(props.product);
+    props.addedToCart(props.product.id);
+  };
   const { product } = props;
   const { isInCart } = product;
   let disable = false;
@@ -59,6 +64,9 @@ const Cards = (props) => {
           color="green"
           size="huge"
           disabled={disable ? true : false}
+          onClick={() => {
+            addToCart();
+          }}
         >
           {btnContent}
         </Button>
@@ -66,5 +74,11 @@ const Cards = (props) => {
     </React.Fragment>
   );
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (product) => dispatch(actions.addToCart(product)),
+    addedToCart: (id) => dispatch(actions.addedToCart(id)),
+  };
+};
 
-export default Cards;
+export default connect(null, mapDispatchToProps)(Cards);

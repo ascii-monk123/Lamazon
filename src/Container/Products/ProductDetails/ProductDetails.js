@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
+import * as actions from "../../../store/actions/actionCreaters/exporter";
 
 import {
   Container,
@@ -22,12 +23,13 @@ class ProductDetails extends Component {
   state = {
     productId: "",
   };
+  added = (product) => {
+    console.log(product);
+    this.props.addToCart(product);
+    this.props.addedToCart(this.props.id);
+  };
   componentDidMount() {}
   render() {
-    if (!this.props.products) {
-      // return <Redirect to="/" />;
-      console.log("hi");
-    }
     if (!this.props.product) {
       return (
         <Container>
@@ -37,7 +39,27 @@ class ProductDetails extends Component {
         </Container>
       );
     }
-    const { product } = this.props;
+    const { product, selectedProduct } = this.props;
+    let button = (
+      <Button fluid color="green" size="huge" animated="vertical">
+        <Button.Content visible onClick={() => this.added(product)}>
+          Add to cart
+        </Button.Content>
+        <Button.Content hidden>
+          <Icon name="shop"></Icon>
+        </Button.Content>
+      </Button>
+    );
+    if (selectedProduct) {
+      console.log(selectedProduct[0].isInCart);
+      if (selectedProduct[0].isInCart) {
+        button = (
+          <Button disabled fluid color="red" size="huge">
+            Added To Cart
+          </Button>
+        );
+      }
+    }
     return (
       <React.Fragment>
         <div className={Classes.ProductDetails}>
@@ -122,12 +144,7 @@ class ProductDetails extends Component {
                   <p className={Classes.Price}>$ {product.price}</p>
                   <p className={Classes.taxText}>Inclusive of all taxes</p>
                   <br />
-                  <Button fluid color="green" size="huge" animated="vertical">
-                    <Button.Content visible>Add to cart</Button.Content>
-                    <Button.Content hidden>
-                      <Icon name="shop"></Icon>
-                    </Button.Content>
-                  </Button>
+                  {button}
                   <br />
                   <br />
                   <br />
@@ -184,15 +201,21 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const products = state.firestore.data.products;
   const product = products ? products[id] : null;
+  const selectedProduct = state.products.products
+    ? state.products.products.filter((product) => product.id === id)
+    : null;
   return {
-    currentProduct: state.products.currentProduct,
-    products: state.products.products,
     product: product,
+    selectedProduct: selectedProduct,
+    id: id,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    addToCart: (product) => dispatch(actions.addToCart(product)),
+    addedToCart: (id) => dispatch(actions.addedToCart(id)),
+  };
 };
 
 export default compose(
