@@ -16,3 +16,11 @@ export const removeFromCart = (product) => {
     product: product,
   };
 };
+
+export const quantityChanged = (value, productId) => {
+  return {
+    type: actionTypes.QUANTITY_CHANGED,
+    value: value,
+    id: productId,
+  };
+};

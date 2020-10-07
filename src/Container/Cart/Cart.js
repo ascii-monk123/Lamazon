@@ -44,7 +44,9 @@ class Cart extends Component {
           <Grid divided>
             <Grid.Row columns={2}>
               <Grid.Column computer={8} tablet={16}>
-                <h2 className={Classes.CartTitle}>Your cart (1 item)</h2>
+                <h2 className={Classes.CartTitle}>
+                  Your cart ({this.props.total} item)
+                </h2>
                 {cart.map((cartItem) => (
                   <CartCard product={cartItem} key={uniqid()} />
                 ))}
@@ -67,6 +69,7 @@ const mapStateToProps = (state) => {
   return {
     cart: state.cart.cart,
     price: state.cart.totalPrice,
+    total: state.cart.total,
   };
 };
 

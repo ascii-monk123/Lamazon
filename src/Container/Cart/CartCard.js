@@ -24,6 +24,9 @@ const CartCard = (props) => {
     props.removeProduct(props.product);
     props.removedProduct(props.product.id);
   };
+  const selectChangedHandler = (e, { value }) => {
+    props.qtyChanged(value, props.product.id);
+  };
   const { product } = props;
   return (
     <Segment>
@@ -46,7 +49,12 @@ const CartCard = (props) => {
               <p className={Classes.ProductRetail}>
                 Sold By: {product.manufacturer}
               </p>
-              <Select placeholder="qty" options={qty} />
+              <Select
+                placeholder="qty"
+                options={qty}
+                onChange={selectChangedHandler}
+                value={props.qty}
+              />
             </Grid.Column>
             <Grid.Column computer={2} mobile={4}>
               <h2>$ {product.price}</h2>
@@ -74,11 +82,21 @@ const CartCard = (props) => {
   );
 };
 
+const mapStateToProps = (state, ownProps) => {
+  const requiredProduct = state.cart.cart.filter(
+    (item) => item.id === ownProps.product.id
+  );
+  const quantity = requiredProduct[0].quantity;
+  return {
+    qty: quantity,
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     removeProduct: (product) => dispatch(actions.removeFromCart(product)),
     removedProduct: (id) => dispatch(actions.removedFromCart(id)),
+    qtyChanged: (value, id) => dispatch(actions.quantityChanged(value, id)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(CartCard);
+export default connect(mapStateToProps, mapDispatchToProps)(CartCard);
