@@ -12,11 +12,30 @@ import {
 import CartCard from "./CartCard";
 import { connect } from "react-redux";
 import uniqid from "uniqid";
+import Background from "../../assets/shoppingbag.jpg";
 class Cart extends Component {
   render() {
     const { cart } = this.props;
     if (cart.length === 0) {
-      return <div>Cart Is empty!!</div>;
+      return (
+        <div className={Classes.Empty}>
+          <Container
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <Image
+              src={Background}
+              size="medium"
+              style={{
+                margin: "10px auto",
+              }}
+            />
+            <h2>Hey,it feels so light!</h2>
+            <p>There's nothing in your bag let's add some items.</p>
+          </Container>
+        </div>
+      );
     }
 
     return (
