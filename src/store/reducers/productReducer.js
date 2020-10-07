@@ -1,9 +1,21 @@
 import * as actionTypes from "../actions/actionTypes/actionTypes";
-
-const initialState = {
-  products: null,
-  currentProduct: null,
-};
+let storage = null;
+if (!localStorage.getItem("products")) {
+  localStorage.setItem(
+    "products",
+    JSON.stringify({
+      products: null,
+      currentProduct: null,
+    })
+  );
+  storage = {
+    products: null,
+    currentProduct: null,
+  };
+} else {
+  storage = JSON.parse(localStorage.getItem("products"));
+}
+const initialState = storage;
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,6 +24,13 @@ const reducer = (state = initialState, action) => {
         ...product,
         isInCart: false,
       }));
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: [...newProducts],
+        })
+      );
 
       return {
         ...state,
@@ -30,6 +49,13 @@ const reducer = (state = initialState, action) => {
             ...product,
           };
       });
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: updatedProducts,
+        })
+      );
       return {
         ...state,
         products: updatedProducts,
@@ -46,7 +72,13 @@ const reducer = (state = initialState, action) => {
             ...product,
           };
       });
-      console.log(updatedProducts2);
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: updatedProducts2,
+        })
+      );
       return {
         ...state,
         products: updatedProducts2,

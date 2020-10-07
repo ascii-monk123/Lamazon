@@ -27,6 +27,7 @@ class ProductDetails extends Component {
     this.props.addToCart(product);
     this.props.addedToCart(this.props.id);
   };
+  2;
   render() {
     if (!this.props.product) {
       return (
