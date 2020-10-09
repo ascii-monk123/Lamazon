@@ -29,3 +29,15 @@
   align-items: center;
   height: 40rem;
 }
+.redText {
+  color: $color-red-light;
+}
+.blueText {
+  color: $color-blue;
+}
+
+@media (max-width: 963px) {
+  .mt40 {
+    margin-top: 7rem !important;
+  }
+}

@@ -14,6 +14,7 @@ import CartCard from "./CartCard";
 import { connect } from "react-redux";
 import uniqid from "uniqid";
 import Background from "../../assets/shoppingbag.jpg";
+import {Link} from 'react-router-dom';
 class Cart extends Component {
   render() {
     const { cart } = this.props;
@@ -52,11 +53,47 @@ class Cart extends Component {
                   <CartCard product={cartItem} key={uniqid()} />
                 ))}
               </Grid.Column>
-              <Grid.Column computer={8} table={16}>
+              <Grid.Column computer={8} tablet={16} className={Classes.mt40}>
                 <h2 className={Classes.CartTitle}>
                   Cart Total{" "}
                   <span className={Classes.greenText}>${this.props.price}</span>
                 </h2>
+                <br/><br/>
+                <List divided verticalAlign="middle" style={{
+                  textAlign:'center',
+                  width:'40%',
+                  margin:'0 auto'
+                }}>
+                  <List.Item>
+                    <List.Content>
+              <p>Total Price including taxes = <span className={Classes.blueText}>${this.props.price}</span></p>
+                    </List.Content>
+                  </List.Item>
+                  <p>+</p>
+                  <List.Item>
+                    <List.Content>
+              <p>Shipping Charges = <span className={Classes.redText}>${this.props.shipping}</span></p>
+                    </List.Content>
+                  </List.Item>
+                  <List.Item>
+                    <List.Content>
+              <p>Total Charges = <span className={Classes.greenText}>${this.props.checkoutPrice}</span></p>
+                    </List.Content>
+                  </List.Item>
+
+                </List>
+                <Link to={'/Checkout'} >
+                  <Button size="huge" style={{
+                    width:'60%',
+                    display:'block',
+                    margin:'40px auto'
+                  }}
+                  color="green">
+              <Button.Content>
+                Procced To Checkout
+              </Button.Content>
+                  </Button>
+                </Link>
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -71,6 +108,8 @@ const mapStateToProps = (state) => {
     cart: state.cart.cart,
     price: state.cart.totalPrice,
     total: state.cart.total,
+    shipping:state.cart.shippingCharges,
+    checkoutPrice:state.cart.checkoutPrice
   };
 };
 
