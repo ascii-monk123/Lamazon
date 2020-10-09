@@ -8,6 +8,7 @@ import {
   Container,
   Select,
   Button,
+  List
 } from "semantic-ui-react";
 import CartCard from "./CartCard";
 import { connect } from "react-redux";

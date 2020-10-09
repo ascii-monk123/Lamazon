@@ -75,11 +75,12 @@ const reducer = (state = initialState, action) => {
       };
     case actionTypes.QUANTITY_CHANGED:
       const cartItem = state.cart.filter((item) => item.id === action.id);
+      const oldTotal=parseFloat( parseFloat(cartItem[0].price)*parseFloat(cartItem[0].quantity)).toFixed(2);
       const newCartItem = { ...cartItem[0], quantity: action.value };
       const newTotal = (
         parseFloat(state.totalPrice) -
-        parseFloat(newCartItem.price) +
-        parseFloat(newCartItem.price * action.value)
+        oldTotal +
+        parseFloat(newCartItem.price) *parseFloat( action.value)
       ).toFixed(2);
       localStorage.setItem(
         "cart",
