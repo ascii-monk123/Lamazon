@@ -12,7 +12,8 @@ const Routes = () => {
         <Route path="/" exact component={ProductPage} />
         <Route path="/product/:id" exact component={ProductDetails} />
         <Route path="/cart" exact component={Cart} />
-        <Route path="/checkout" exact component={Checkout} />
+     <Route path="/checkout" exact component={Checkout} />
+              
       </Switch>
     </React.Fragment>
   );
