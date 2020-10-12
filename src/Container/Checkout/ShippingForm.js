@@ -15,14 +15,14 @@ const ShippingForm = (props) => {
     },
   } = props;
   const [errors, setErrors] = useState({
-    firstNameError: false,
-    lastNameError: false,
-    emailError: false,
-    zipError: false,
-    countryError: false,
-    stateError: false,
-    phoneError: false,
-    addressError: false,
+    firstNameError: true,
+    lastNameError: true,
+    emailError: true,
+    zipError: true,
+    countryError: true,
+    stateError: true,
+    phoneError: true,
+    addressError: true,
   });
   const checkErrors = (type, value) => {
     switch (type) {
@@ -83,10 +83,31 @@ const ShippingForm = (props) => {
           setErrors({ ...errors, addressError: true });
         else setErrors({ ...errors, addressError: false });
         return;
+      case "phoneNumber":
+        if (value.length >= 10) {
+          setErrors({ ...errors, phoneError: false });
+        } else {
+          setErrors({ ...errors, phoneError: true });
+        }
       default:
         return;
     }
   };
+  const data = Object.keys(errors);
+
+  let btn = (
+    <Button color="green" size="huge" onClick={props.submit}>
+      Proceed to Payment
+    </Button>
+  );
+  data.map((key) => {
+    if (errors[key] === true)
+      btn = (
+        <Button color="green" size="huge" disabled>
+          Procced to Checkout
+        </Button>
+      );
+  });
   return (
     <React.Fragment>
       <h1 style={{ marginTop: "70px" }}>Enter Shipping Details</h1>
@@ -169,7 +190,10 @@ const ShippingForm = (props) => {
               name="phoneNumber"
               value={phoneNumber}
               required
-              onChange={props.handleChange}
+              onChange={(e, { name, value }) => {
+                props.handleChange(e, { name, value });
+                checkErrors("phoneNumber", value);
+              }}
             />
           </Form.Group>
           <Form.Group widths={2}>
@@ -202,9 +226,7 @@ const ShippingForm = (props) => {
           </Form.Group>
         </Form>
         <br></br>
-        <Button color="green" size="huge" onClick={props.submit}>
-          Submit Data
-        </Button>
+        {btn}
       </Segment>
     </React.Fragment>
   );

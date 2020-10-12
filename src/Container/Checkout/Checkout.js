@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Classes from "./Checkout.module.scss";
 import { Container, Step, Icon, Divider } from "semantic-ui-react";
 import ShippingForm from "./ShippingForm";
+import PaymentForm from "./PaymentForm";
 class Checkout extends Component {
   state = {
     step: 1,
@@ -9,7 +10,7 @@ class Checkout extends Component {
     lastName: "",
     address: "",
     email: "",
-    paymentMethod: "",
+    paymentMethod: "paypal",
     zipCode: "",
     country: "",
     state: "",
@@ -28,12 +29,22 @@ class Checkout extends Component {
     });
   };
   changeHandler = (e, { name, value }) => {
-    this.setState({
-      [name]: value,
-    });
+    if (name === undefined) {
+      this.setState({
+        paymentMethod: value,
+      });
+    } else {
+      this.setState({
+        [name]: value,
+      });
+    }
   };
-  handleSubmit = () => {
-    console.log(this.state);
+  handleSubmit = (type) => {
+    if (type === "next") {
+      this.next();
+    } else if (type === "prev") {
+      this.prevStep();
+    }
   };
   render() {
     const { step } = this.state;
@@ -67,9 +78,29 @@ class Checkout extends Component {
             handleChange={(e, { name, value }) => {
               this.changeHandler(e, { name, value });
             }}
-            submit={this.handleSubmit}
+            submit={() => this.handleSubmit("next")}
           />
         );
+        break;
+      case 2:
+        curForm = (
+          <PaymentForm
+            handleChange={(e, { value }) => {
+              const handle = "paymentMethod";
+              this.changeHandler(e, { handle, value });
+            }}
+            back={this.prevStep}
+            next={this.next}
+            payment={this.state.paymentMethod}
+          />
+        );
+        break;
+      case 3:
+        console.log(this.state);
+        curForm = <h1>Procced To Checkout</h1>;
+        break;
+      default:
+        return;
     }
     return (
       <React.Fragment>
@@ -83,30 +114,76 @@ class Checkout extends Component {
                 margin: "20px auto",
               }}
             >
-              <Step active>
-                <Icon name="truck" />
-                <Step.Content>
-                  <Step.Title>Shipping</Step.Title>
-                  <Step.Description>
-                    Choose your shipping options
-                  </Step.Description>
-                </Step.Content>
-              </Step>
+              {this.state.step === 1 ? (
+                <Step active>
+                  <Icon name="truck" />
+                  <Step.Content>
+                    <Step.Title>Shipping</Step.Title>
+                    <Step.Description>
+                      Choose your shipping options
+                    </Step.Description>
+                  </Step.Content>
+                </Step>
+              ) : this.state.step >= 2 ? (
+                <Step completed>
+                  <Icon name="truck" />
+                  <Step.Content>
+                    <Step.Title>Shipping</Step.Title>
+                    <Step.Description>
+                      Choose your shipping options
+                    </Step.Description>
+                  </Step.Content>
+                </Step>
+              ) : null}
+              {this.state.step === 1 ? (
+                <Step>
+                  <Icon name="payment" />
+                  <Step.Content>
+                    <Step.Title>Billing</Step.Title>
+                    <Step.Description>
+                      Enter billing information
+                    </Step.Description>
+                  </Step.Content>
+                </Step>
+              ) : this.state.step === 2 ? (
+                <Step active>
+                  {" "}
+                  <Icon name="payment" />
+                  <Step.Content>
+                    <Step.Title>Billing</Step.Title>
+                    <Step.Description>
+                      Enter billing information
+                    </Step.Description>
+                  </Step.Content>
+                </Step>
+              ) : (
+                <Step completed>
+                  {" "}
+                  <Icon name="payment" />
+                  <Step.Content>
+                    <Step.Title>Billing</Step.Title>
+                    <Step.Description>
+                      Enter billing information
+                    </Step.Description>
+                  </Step.Content>
+                </Step>
+              )}
 
-              <Step>
-                <Icon name="payment" />
-                <Step.Content>
-                  <Step.Title>Billing</Step.Title>
-                  <Step.Description>Enter billing information</Step.Description>
-                </Step.Content>
-              </Step>
-
-              <Step disabled>
-                <Icon name="info" />
-                <Step.Content>
-                  <Step.Title>Confirm Order</Step.Title>
-                </Step.Content>
-              </Step>
+              {this.state.step < 3 ? (
+                <Step>
+                  <Icon name="info" />
+                  <Step.Content>
+                    <Step.Title>Confirm Order</Step.Title>
+                  </Step.Content>
+                </Step>
+              ) : (
+                <Step active>
+                  <Icon name="info" />
+                  <Step.Content>
+                    <Step.Title>Confirm Order</Step.Title>
+                  </Step.Content>
+                </Step>
+              )}
             </Step.Group>
             {curForm}
           </Container>
