@@ -3,6 +3,7 @@ import Classes from "./Checkout.module.scss";
 import { Container, Step, Icon, Divider } from "semantic-ui-react";
 import ShippingForm from "./ShippingForm";
 import PaymentForm from "./PaymentForm";
+import PlaceOrder from "./PlaceOrder";
 class Checkout extends Component {
   state = {
     step: 1,
@@ -97,7 +98,7 @@ class Checkout extends Component {
         break;
       case 3:
         console.log(this.state);
-        curForm = <h1>Procced To Checkout</h1>;
+        curForm = <PlaceOrder />;
         break;
       default:
         return;

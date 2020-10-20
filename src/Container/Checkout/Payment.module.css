@@ -1,0 +1,18 @@
+.green {
+  color: #21ba45;
+}
+.red {
+  color: #db2828;
+}
+.yellow {
+  color: #fcdd46;
+}
+.purple {
+  color: #a891c4;
+}
+
+@media (max-width: 900px) {
+  .mt80 {
+    margin-top: 80px;
+  }
+}
