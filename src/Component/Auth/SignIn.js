@@ -18,6 +18,14 @@ class SignIn extends Component {
       password: "",
     };
   }
+  handleChange = (e, { name, value }) => {
+    this.setState({
+      [name]: value,
+    });
+  };
+  handleSubmit = () => {
+    console.log(this.state);
+  };
   render() {
     return (
       <React.Fragment>
@@ -39,6 +47,8 @@ class SignIn extends Component {
                   iconPosition="left"
                   placeholder="E-mail address"
                   style={{ height: "50px", fontSize: "20px" }}
+                  name="email"
+                  onChange={this.handleChange}
                 />
                 <Form.Input
                   fluid
@@ -47,9 +57,16 @@ class SignIn extends Component {
                   placeholder="Password"
                   type="password"
                   style={{ height: "50px", fontSize: "20px" }}
+                  name="password"
+                  onChange={this.handleChange}
                 />
 
-                <Button color="green" fluid size="huge">
+                <Button
+                  color="green"
+                  fluid
+                  size="huge"
+                  onClick={this.handleSubmit}
+                >
                   Login
                 </Button>
               </Segment>
