@@ -16,14 +16,14 @@ const signedOutLinks = (props) => {
           </Link>
         </li>
         <li>
-          <a href="/" className={Classes.NavLink}>
+          <Link to="/SignIn" className={Classes.NavLink}>
             Login
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/" className={Classes.NavLink}>
-            Signup
-          </a>
+          <Link to="/SignUp" className={Classes.NavLink}>
+            Sign Up
+          </Link>
         </li>
       </ul>
     </div>
