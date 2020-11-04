@@ -11,3 +11,9 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const REMOVED_FROM_CART = "REMOVED_FROM_CART";
 
 export const QUANTITY_CHANGED = "QUANTITY_CHANGED";
+
+export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
+export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
+export const SIGN_IN_USER = "SIGN_IN_USER";
+
+export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";

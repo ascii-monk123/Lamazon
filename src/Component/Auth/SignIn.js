@@ -8,7 +8,9 @@ import {
   Message,
   Segment,
 } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/actionCreaters/exporter";
 
 class SignIn extends Component {
   constructor(props) {
@@ -24,9 +26,12 @@ class SignIn extends Component {
     });
   };
   handleSubmit = () => {
-    console.log(this.state);
+    this.props.login(this.state);
   };
+
   render() {
+    const { auth, authError } = this.props;
+    if (auth.uid) return <Redirect to="/" />;
     return (
       <React.Fragment>
         <Grid
@@ -74,6 +79,7 @@ class SignIn extends Component {
             <Message>
               New User ? <NavLink to="/SignUp">Sign Up</NavLink>
             </Message>
+            {authError ? <Message color="red">{authError}</Message> : null}
           </Grid.Column>
         </Grid>
       </React.Fragment>
@@ -81,4 +87,17 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = (state) => {
+  return {
+    authError: state.auth.errorMessage,
+    auth: state.firebase.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (credentials) => dispatch(actions.signIn(credentials)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

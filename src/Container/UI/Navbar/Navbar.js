@@ -3,6 +3,7 @@ import Classes from "./Navbar.module.scss";
 import { FaAmazon } from "react-icons/fa";
 import SignedOutLinks from "../../../Component/UI/SignedOutLinks/SignedOutLinks";
 import SignedInLinks from "../../../Component/UI/SignedInLinks/SignedInLinks";
+import { connect } from "react-redux";
 
 const iconStyle = {
   fontSize: "40px",
@@ -10,7 +11,7 @@ const iconStyle = {
   verticalAlign: "center",
 };
 const Navbar = (props) => {
-  const signedIn = false;
+  const { auth } = props;
   return (
     <header className={Classes.Navbar}>
       <nav>
@@ -19,11 +20,16 @@ const Navbar = (props) => {
             <FaAmazon style={iconStyle} />
             <a href="#">Lamazon</a>
           </div>
-          {signedIn ? <SignedInLinks /> : <SignedOutLinks />}
+          {auth.uid ? <SignedInLinks /> : <SignedOutLinks />}
         </div>
       </nav>
     </header>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
 
-export default Navbar;
+export default connect(mapStateToProps)(Navbar);
