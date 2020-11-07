@@ -10,6 +10,7 @@ import {
 } from "semantic-ui-react";
 import { NavLink, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import * as actions from "../../store/actions/actionCreaters/exporter";
 import validateEmail from "../../helpers/emailValidate";
 class SignUp extends Component {
   constructor(props) {
@@ -45,6 +46,8 @@ class SignUp extends Component {
     } else if (!validateEmail(this.state.email)) {
       this.setState({ showErr: true, errMsg: "Email noe valid" });
       setTimeout(this.handleDismiss, 3000);
+    } else {
+      this.props.signUp(this.state);
     }
   };
   handleDismiss = () => {
@@ -52,11 +55,21 @@ class SignUp extends Component {
   };
   render() {
     let errMssg = null;
+    const { error, auth } = this.props;
+    if (auth) return <Redirect to="/"></Redirect>;
+    let errMsg = null;
     if (this.state.showErr) {
       errMssg = (
         <Message negative onDismiss={this.handleDismiss}>
           <Message.Header>Oops !</Message.Header>
           <p>{this.state.errMsg}</p>
+        </Message>
+      );
+    }
+    if (error) {
+      errMsg = (
+        <Message negative>
+          <p>{error}</p>
         </Message>
       );
     }
@@ -130,6 +143,7 @@ class SignUp extends Component {
                 </Button>
               </Segment>
             </Form>
+            {errMsg}
             <Message>
               Already a user ? <NavLink to="/SignIn">Sign In</NavLink>
             </Message>
@@ -139,4 +153,15 @@ class SignUp extends Component {
     );
   }
 }
-export default SignUp;
+const mapStateToProps = (state) => {
+  return {
+    error: state.auth.signUpError,
+    auth: state.firebase.auth,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (newUser) => dispatch(actions.signUp(newUser)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
