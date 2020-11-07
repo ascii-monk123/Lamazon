@@ -56,7 +56,7 @@ class SignUp extends Component {
   render() {
     let errMssg = null;
     const { error, auth } = this.props;
-    if (auth) return <Redirect to="/"></Redirect>;
+    if (auth.uid) return <Redirect to="/"></Redirect>;
     let errMsg = null;
     if (this.state.showErr) {
       errMssg = (

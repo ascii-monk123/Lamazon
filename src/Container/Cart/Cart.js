@@ -14,10 +14,21 @@ import CartCard from "./CartCard";
 import { connect } from "react-redux";
 import uniqid from "uniqid";
 import Background from "../../assets/shoppingbag.jpg";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 class Cart extends Component {
+  state = {
+    isSignedIn: false,
+  };
+  proceedToCheckOut = () => {
+    if (this.props.auth.uid) {
+      this.props.history.push("/checkout");
+    } else {
+      this.props.history.push("/signIn");
+    }
+  };
   render() {
     const { cart } = this.props;
+
     if (cart.length === 0) {
       return (
         <div className={Classes.Empty}>
@@ -101,19 +112,19 @@ class Cart extends Component {
                     </List.Content>
                   </List.Item>
                 </List>
-                <Link to={"/checkout"}>
-                  <Button
-                    size="huge"
-                    style={{
-                      width: "60%",
-                      display: "block",
-                      margin: "40px auto",
-                    }}
-                    color="green"
-                  >
-                    <Button.Content>Procced To Checkout</Button.Content>
-                  </Button>
-                </Link>
+
+                <Button
+                  size="huge"
+                  style={{
+                    width: "60%",
+                    display: "block",
+                    margin: "40px auto",
+                  }}
+                  color="green"
+                  onClick={this.proceedToCheckOut}
+                >
+                  <Button.Content>Procced To Checkout</Button.Content>
+                </Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -130,6 +141,7 @@ const mapStateToProps = (state) => {
     total: state.cart.total,
     shipping: state.cart.shippingCharges,
     checkoutPrice: state.cart.checkoutPrice,
+    auth: state.firebase.auth,
   };
 };
 
