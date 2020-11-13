@@ -4,6 +4,8 @@ import { Container, Step, Icon, Divider } from "semantic-ui-react";
 import ShippingForm from "./ShippingForm";
 import PaymentForm from "./PaymentForm";
 import PlaceOrder from "./PlaceOrder";
+import { connect, connnect } from "react-redux";
+import { Redirect } from "react-router-dom";
 class Checkout extends Component {
   state = {
     step: 1,
@@ -48,6 +50,10 @@ class Checkout extends Component {
     }
   };
   render() {
+    const { auth } = this.props;
+    if (!auth.uid) {
+      return <Redirect to="/" />;
+    }
     const { step } = this.state;
     let curForm = null;
     const {
@@ -194,4 +200,10 @@ class Checkout extends Component {
   }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    auth: state.firebase.auth,
+  };
+};
+export default connect(mapStateToProps)(Checkout);

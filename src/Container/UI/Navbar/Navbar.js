@@ -11,7 +11,7 @@ const iconStyle = {
   verticalAlign: "center",
 };
 const Navbar = (props) => {
-  const { auth } = props;
+  const { auth, profile } = props;
   return (
     <header className={Classes.Navbar}>
       <nav>
@@ -20,7 +20,7 @@ const Navbar = (props) => {
             <FaAmazon style={iconStyle} />
             <a href="#">Lamazon</a>
           </div>
-          {auth.uid ? <SignedInLinks /> : <SignedOutLinks />}
+          {auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />}
         </div>
       </nav>
     </header>
@@ -29,6 +29,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
+    profile: state.firebase.profile,
   };
 };
 

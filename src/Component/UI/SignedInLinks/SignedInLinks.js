@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 import * as actions from "../../../store/actions/actionCreaters/exporter";
 const signedInLinks = (props) => {
+  const { profile } = props;
+  let initals = profile.initials;
+
   return (
     <div className={Classes.NavLinksWrapper}>
       <ul className={Classes.NavLinks}>
@@ -25,6 +28,24 @@ const signedInLinks = (props) => {
         <li>
           <Link to="/Orders" className={Classes.NavLink}>
             Orders
+          </Link>
+        </li>
+        <li>
+          <Link to="/Profile">
+            <Button
+              circular
+              color="google plus"
+              style={{
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: "13px",
+              }}
+            >
+              {initals ? initals : ""}
+            </Button>
           </Link>
         </li>
       </ul>

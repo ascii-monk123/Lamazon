@@ -6,6 +6,7 @@ import Cart from "../Container/Cart/Cart";
 import Checkout from "../Container/Checkout/Checkout";
 import SignIn from "../Component/Auth/SignIn";
 import SignUp from "../Component/Auth/SignUp";
+import Orders from "../Container/Orders/Orders";
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
         <Route path="/checkout" exact component={Checkout} />
         <Route path="/SignIn" exact component={SignIn} />
         <Route path="/SignUp" exact component={SignUp} />
+        <Route path="/Orders" exact component={Orders} />
       </Switch>
     </React.Fragment>
   );

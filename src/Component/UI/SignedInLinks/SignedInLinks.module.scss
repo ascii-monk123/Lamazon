@@ -1,6 +1,6 @@
 @import "../../../scss/variables";
 .NavLinksWrapper {
-  width: 30rem;
+  width: 33rem;
 }
 ul.NavLinks {
   width: 100%;
@@ -12,6 +12,9 @@ ul.NavLinks {
   li {
     list-style-type: none;
   }
+}
+.NavLink2 {
+  height: 6rem;
 }
 .NavLink {
   color: #fff;
