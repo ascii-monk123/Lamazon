@@ -6,6 +6,7 @@ import PaymentForm from "./PaymentForm";
 import PlaceOrder from "./PlaceOrder";
 import { connect, connnect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import makeOrderFormat from "../../helpers/makeOrderFormat";
 class Checkout extends Component {
   state = {
     step: 1,
@@ -48,6 +49,12 @@ class Checkout extends Component {
     } else if (type === "prev") {
       this.prevStep();
     }
+  };
+  placeOrder = () => {
+    const { auth, products, total } = this.props;
+    const userId = auth.uid;
+    const orderData = makeOrderFormat(this.state, userId, products, total);
+    console.log(orderData);
   };
   render() {
     const { auth } = this.props;
@@ -104,7 +111,7 @@ class Checkout extends Component {
         break;
       case 3:
         console.log(this.state);
-        curForm = <PlaceOrder />;
+        curForm = <PlaceOrder clicked={this.placeOrder} />;
         break;
       default:
         return;
@@ -204,6 +211,13 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     auth: state.firebase.auth,
+    products: state.cart.cart.map((product) => {
+      return {
+        productId: product.id,
+        qty: product.quantity,
+      };
+    }),
+    total: state.cart.totalPrice,
   };
 };
 export default connect(mapStateToProps)(Checkout);

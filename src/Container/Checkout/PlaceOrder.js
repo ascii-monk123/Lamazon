@@ -33,7 +33,7 @@ const PlaceOrder = (props) => {
                   <span className={Classes.purple}>${checkoutPrice}</span>
                 </p>
                 <br />
-                <Button color="green" size="huge" fluid>
+                <Button color="green" size="huge" fluid onClick={props.clicked}>
                   Place Your Order
                 </Button>
               </Container>
