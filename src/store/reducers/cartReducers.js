@@ -7,16 +7,16 @@ if (!localStorage.getItem("cart")) {
       cart: [],
       total: 0,
       totalPrice: "0.0",
-      shippingCharges:'10',
-      checkoutPrice:'0.00'
+      shippingCharges: "10",
+      checkoutPrice: "0.00",
     })
   );
   storage = {
     cart: [],
     total: 0,
     totalPrice: "0.0",
-    shippingCharges:'200',
-    checkoutPrice:'0.00'
+    shippingCharges: "200",
+    checkoutPrice: "0.00",
   };
 } else {
   storage = JSON.parse(localStorage.getItem("cart"));
@@ -37,9 +37,11 @@ const reducer = (state = initialState, action) => {
           totalPrice: (
             parseFloat(action.product.price) + parseFloat(state.totalPrice)
           ).toFixed(2),
-          checkoutPrice:(
-            parseFloat(action.product.price) + parseFloat(state.totalPrice)+parseFloat(state.shippingCharges)
-          ).toFixed(2)
+          checkoutPrice: (
+            parseFloat(action.product.price) +
+            parseFloat(state.totalPrice) +
+            parseFloat(state.shippingCharges)
+          ).toFixed(2),
         })
       );
 
@@ -50,9 +52,11 @@ const reducer = (state = initialState, action) => {
         totalPrice: (
           parseFloat(action.product.price) + parseFloat(state.totalPrice)
         ).toFixed(2),
-        checkoutPrice:(
-            parseFloat(action.product.price) + parseFloat(state.totalPrice)+parseFloat(state.shippingCharges)
-          ).toFixed(2)
+        checkoutPrice: (
+          parseFloat(action.product.price) +
+          parseFloat(state.totalPrice) +
+          parseFloat(state.shippingCharges)
+        ).toFixed(2),
       };
 
     case actionTypes.REMOVE_FROM_CART:
@@ -72,10 +76,11 @@ const reducer = (state = initialState, action) => {
             parseFloat(state.totalPrice) -
             parseFloat(action.product.price * reqProd[0].quantity)
           ).toFixed(2),
-          checkoutPrice:(
+          checkoutPrice: (
             parseFloat(state.totalPrice) -
-            parseFloat(action.product.price * reqProd[0].quantity)+parseFloat(state.shippingCharges)
-          ).toFixed(2)
+            parseFloat(action.product.price * reqProd[0].quantity) +
+            parseFloat(state.shippingCharges)
+          ).toFixed(2),
         })
       );
       return {
@@ -86,19 +91,22 @@ const reducer = (state = initialState, action) => {
           parseFloat(state.totalPrice) -
           parseFloat(action.product.price * reqProd[0].quantity)
         ).toFixed(2),
-        checkoutPrice:(
-            parseFloat(state.totalPrice) -
-            parseFloat(action.product.price * reqProd[0].quantity)+parseFloat(state.shippingCharges)
-          ).toFixed(2)
+        checkoutPrice: (
+          parseFloat(state.totalPrice) -
+          parseFloat(action.product.price * reqProd[0].quantity) +
+          parseFloat(state.shippingCharges)
+        ).toFixed(2),
       };
     case actionTypes.QUANTITY_CHANGED:
       const cartItem = state.cart.filter((item) => item.id === action.id);
-      const oldTotal=parseFloat( parseFloat(cartItem[0].price)*parseFloat(cartItem[0].quantity)).toFixed(2);
+      const oldTotal = parseFloat(
+        parseFloat(cartItem[0].price) * parseFloat(cartItem[0].quantity)
+      ).toFixed(2);
       const newCartItem = { ...cartItem[0], quantity: action.value };
       const newTotal = (
         parseFloat(state.totalPrice) -
         oldTotal +
-        parseFloat(newCartItem.price) *parseFloat( action.value)
+        parseFloat(newCartItem.price) * parseFloat(action.value)
       ).toFixed(2);
       localStorage.setItem(
         "cart",
@@ -115,7 +123,9 @@ const reducer = (state = initialState, action) => {
                 ...item,
               };
           }),
-          checkoutPrice:parseFloat(parseFloat(newTotal)+parseFloat(state.shippingCharges)).toFixed(2)
+          checkoutPrice: parseFloat(
+            parseFloat(newTotal) + parseFloat(state.shippingCharges)
+          ).toFixed(2),
         })
       );
       return {
@@ -131,7 +141,28 @@ const reducer = (state = initialState, action) => {
               ...item,
             };
         }),
-        checkoutPrice:parseFloat(parseFloat(newTotal)+parseFloat(state.shippingCharges)).toFixed(2)
+        checkoutPrice: parseFloat(
+          parseFloat(newTotal) + parseFloat(state.shippingCharges)
+        ).toFixed(2),
+      };
+    case actionTypes.CLEAR_CART:
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          cart: [],
+          total: 0,
+          totalPrice: "0.0",
+          shippingCharges: "10",
+          checkoutPrice: "0.00",
+        })
+      );
+      return {
+        ...state,
+        cart: [],
+        total: 0,
+        totalPrice: "0.0",
+        shippingCharges: "10",
+        checkoutPrice: "0.00",
       };
     default: {
       return { ...state };

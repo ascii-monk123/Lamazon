@@ -36,7 +36,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         products: [...newProducts],
       };
-
+    case actionTypes.REMOVE_ALL_FROM_CART:
+      const nprods = state.products.map((product) => {
+        return {
+          ...product,
+          isInCart: false,
+        };
+      });
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: nprods,
+        })
+      );
+      return {
+        ...state,
+        products: nprods,
+      };
     case actionTypes.ADDED_TO_CART:
       const updatedProducts = state.products.map((product) => {
         if (product.id === action.id)

@@ -24,3 +24,9 @@ export const quantityChanged = (value, productId) => {
     id: productId,
   };
 };
+
+export const clearCart = () => {
+  return {
+    type: actionTypes.CLEAR_CART,
+  };
+};

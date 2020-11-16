@@ -1,4 +1,5 @@
 export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
+export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
 
 export const GET_PRODUCT_INFO = "GET_PRODUCT_INFO";
 
@@ -11,6 +12,7 @@ export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const REMOVED_FROM_CART = "REMOVED_FROM_CART";
 
 export const QUANTITY_CHANGED = "QUANTITY_CHANGED";
+export const CLEAR_CART = "CLEAR_CART";
 
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
 export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
@@ -20,3 +22,6 @@ export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_ERROR = "SIGN_UP_ERROR";
+
+export const CREATE_ORDER = "CREATE_ORDER";
+export const ORDER_ERROR = "ORDER_CREATE_ERROR";

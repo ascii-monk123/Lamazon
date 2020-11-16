@@ -7,6 +7,8 @@ import PlaceOrder from "./PlaceOrder";
 import { connect, connnect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import makeOrderFormat from "../../helpers/makeOrderFormat";
+import * as actions from "../../store/actions/actionCreaters/exporter";
+import { actionTypes } from "redux-firestore";
 class Checkout extends Component {
   state = {
     step: 1,
@@ -54,10 +56,16 @@ class Checkout extends Component {
     const { auth, products, total } = this.props;
     const userId = auth.uid;
     const orderData = makeOrderFormat(this.state, userId, products, total);
-    console.log(orderData);
+    this.props.placeOrder(orderData);
+    this.props.clearCart();
+    this.props.clearCartStatus();
+    this.props.history.push("/");
   };
   render() {
-    const { auth } = this.props;
+    const { auth, orderErr } = this.props;
+    if (orderErr) {
+      return <Redirect to="/order-not-placed" />;
+    }
     if (!auth.uid) {
       return <Redirect to="/" />;
     }
@@ -218,6 +226,15 @@ const mapStateToProps = (state) => {
       };
     }),
     total: state.cart.totalPrice,
+    orderErr: state.order.orderPlaceError,
   };
 };
-export default connect(mapStateToProps)(Checkout);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    placeOrder: (orderData) => dispatch(actions.createOrder(orderData)),
+    clearCart: () => dispatch(actions.clearCart()),
+    clearCartStatus: () => dispatch(actions.clearAllCart()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

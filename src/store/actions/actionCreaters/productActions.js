@@ -23,3 +23,9 @@ export const removedFromCart = (id) => {
     dispatch({ type: actionTypes.REMOVED_FROM_CART, id: id });
   };
 };
+
+export const clearAllCart = () => {
+  return {
+    type: actionTypes.REMOVE_ALL_FROM_CART,
+  };
+};
