@@ -25,6 +25,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         orderPlaceError: false,
       };
+    case actionTypes.FETCH_ORDERS:
+      return {
+        ...state,
+        orders: action.orders,
+      };
     default:
       return {
         ...state,

@@ -13,4 +13,4 @@ export {
   clearCart,
 } from "./cartActions";
 export { signIn, signOut, signUp } from "./authActions";
-export { createOrder } from "./orderActions";
+export { createOrder, fetchOrders } from "./orderActions";

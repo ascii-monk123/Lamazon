@@ -216,13 +216,15 @@ class Checkout extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     auth: state.firebase.auth,
     products: state.cart.cart.map((product) => {
       return {
         productId: product.id,
         qty: product.quantity,
+        title: product.title,
+        image: product.images[0],
+        company: product.company,
       };
     }),
     total: state.cart.totalPrice,

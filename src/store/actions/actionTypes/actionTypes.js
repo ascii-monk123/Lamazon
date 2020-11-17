@@ -25,3 +25,4 @@ export const SIGN_UP_ERROR = "SIGN_UP_ERROR";
 
 export const CREATE_ORDER = "CREATE_ORDER";
 export const ORDER_ERROR = "ORDER_CREATE_ERROR";
+export const FETCH_ORDERS = "FETCH_ORDERS";
