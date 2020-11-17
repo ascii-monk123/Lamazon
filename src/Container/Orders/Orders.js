@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as actions from "../../store/actions/actionCreaters/exporter";
+import Classes from "./Orders.module.scss";
+import Spinner from "../../Component/UI/Spinner/Spinner";
+import OrderCard from "../../Component/OrderCard/OrderCard";
+import { Container } from "semantic-ui-react";
 
 class Orders extends Component {
   componentDidMount() {
@@ -12,15 +16,33 @@ class Orders extends Component {
     }
   }
   render() {
-    const { auth } = this.props;
+    const { auth, orders } = this.props;
     if (!auth.uid) return <Redirect to="/" />;
-    return <p>Hello we are currently inside the Orders component</p>;
+    if (orders.length === 0)
+      return (
+        <div className={Classes.SpinnerContainer}>
+          <Spinner />
+        </div>
+      );
+    else {
+      return (
+        <div className={Classes.OrdersContainer}>
+          <h2 className={Classes.OrderHeader}>Your Orders</h2>
+          <div className={Classes.Orders}>
+            <Container>
+              <OrderCard />
+            </Container>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
+    orders: state.order.orders,
   };
 };
 const mapDispatchToProps = (dispatch) => {

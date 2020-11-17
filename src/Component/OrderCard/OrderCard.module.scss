@@ -1,0 +1,13 @@
+$color-blue: #92d2ff;
+.SummaryHeader {
+  font-size: 2rem;
+}
+.OrderDetails {
+  font-size: 1.5rem;
+}
+.RedText {
+  color: red;
+}
+.BlueText {
+  color: $color-blue;
+}
