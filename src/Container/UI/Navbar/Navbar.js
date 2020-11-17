@@ -4,6 +4,7 @@ import { FaAmazon } from "react-icons/fa";
 import SignedOutLinks from "../../../Component/UI/SignedOutLinks/SignedOutLinks";
 import SignedInLinks from "../../../Component/UI/SignedInLinks/SignedInLinks";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const iconStyle = {
   fontSize: "40px",
@@ -18,7 +19,7 @@ const Navbar = (props) => {
         <div className={Classes.NavWrapper}>
           <div className={Classes.Logo}>
             <FaAmazon style={iconStyle} />
-            <a href="#">Lamazon</a>
+            <NavLink to="/">Lamazon</NavLink>
           </div>
           {auth.uid ? <SignedInLinks profile={profile} /> : <SignedOutLinks />}
         </div>

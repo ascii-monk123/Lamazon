@@ -11,3 +11,20 @@ $color-blue: #92d2ff;
 .BlueText {
   color: $color-blue;
 }
+.OrangeText {
+  color: orange;
+}
+.ProductHeading {
+  font-size: 2.5rem;
+}
+.ProductDesc {
+  font-size: 1.5rem;
+}
+.GreenText {
+  color: green;
+}
+@media (max-width: 710px) {
+  .Summary {
+    margin-top: 7rem !important;
+  }
+}

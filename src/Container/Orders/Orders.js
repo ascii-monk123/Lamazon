@@ -6,6 +6,7 @@ import Classes from "./Orders.module.scss";
 import Spinner from "../../Component/UI/Spinner/Spinner";
 import OrderCard from "../../Component/OrderCard/OrderCard";
 import { Container } from "semantic-ui-react";
+import uniqid from "uniqid";
 
 class Orders extends Component {
   componentDidMount() {
@@ -30,7 +31,11 @@ class Orders extends Component {
           <h2 className={Classes.OrderHeader}>Your Orders</h2>
           <div className={Classes.Orders}>
             <Container>
-              <OrderCard />
+              {orders.length > 0
+                ? orders.map((order) => (
+                    <OrderCard key={uniqid()} order={order} />
+                  ))
+                : null}
             </Container>
           </div>
         </div>
