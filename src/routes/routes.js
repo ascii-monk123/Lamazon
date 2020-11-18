@@ -8,6 +8,7 @@ import SignIn from "../Component/Auth/SignIn";
 import SignUp from "../Component/Auth/SignUp";
 import Orders from "../Container/Orders/Orders";
 import OrderNotPlaced from "../Component/OrderNotPlaced";
+import Profile from "../Container/Profile/Profile";
 
 const Routes = () => {
   return (
@@ -21,6 +22,7 @@ const Routes = () => {
         <Route path="/SignUp" exact component={SignUp} />
         <Route path="/Orders" exact component={Orders} />
         <Route path="/order-not-placed" exact component={OrderNotPlaced} />
+        <Route path="/Profile" exact component={Profile} />
       </Switch>
     </React.Fragment>
   );
