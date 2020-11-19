@@ -3,7 +3,7 @@ import Classes from "./SignedInLinks.module.scss";
 import { FaShoppingCart } from "react-icons/fa";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button } from "semantic-ui-react";
+import { Button, Image } from "semantic-ui-react";
 import * as actions from "../../../store/actions/actionCreaters/exporter";
 const signedInLinks = (props) => {
   const { profile } = props;
@@ -32,20 +32,35 @@ const signedInLinks = (props) => {
         </li>
         <li>
           <Link to="/Profile">
-            <Button
-              circular
-              color="google plus"
-              style={{
-                width: "40px",
-                height: "40px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "13px",
-              }}
-            >
-              {initals ? initals : ""}
-            </Button>
+            {profile.image ? (
+              <Image
+                circular
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "13px",
+                }}
+                src={profile.image}
+              />
+            ) : (
+              <Button
+                circular
+                color="google plus"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "13px",
+                }}
+              >
+                {initals ? initals : ""}
+              </Button>
+            )}
           </Link>
         </li>
       </ul>

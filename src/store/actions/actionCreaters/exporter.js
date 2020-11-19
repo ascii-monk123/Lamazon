@@ -14,3 +14,4 @@ export {
 } from "./cartActions";
 export { signIn, signOut, signUp } from "./authActions";
 export { createOrder, fetchOrders } from "./orderActions";
+export { updateProfile } from "./profileActions";

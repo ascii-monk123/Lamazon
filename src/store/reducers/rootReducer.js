@@ -5,6 +5,7 @@ import productReducer from "./productReducer";
 import cartReducer from "./cartReducers";
 import authReducer from "./authReducer";
 import orderReducer from "./orderReducer";
+import profileReducer from "./profileReducer";
 
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   auth: authReducer,
   order: orderReducer,
+  profile: profileReducer,
 });
 
 export default rootReducer;
