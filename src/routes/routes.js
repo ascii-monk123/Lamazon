@@ -22,7 +22,7 @@ const Routes = () => {
         <Route path="/SignUp" exact component={SignUp} />
         <Route path="/Orders" exact component={Orders} />
         <Route path="/order-not-placed" exact component={OrderNotPlaced} />
-        <Route path="/Profile" exact component={Profile} />
+        <Route path="/Profile" component={Profile} />
       </Switch>
     </React.Fragment>
   );

@@ -1,0 +1,30 @@
+.ProfileBtn {
+  width: 15rem !important;
+  height: 15rem !important;
+  font-size: 5rem !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-left: 3rem !important;
+}
+.ImageContainer {
+  display: inline-block;
+}
+.UserName {
+  display: inline-block;
+  font-size: 3rem;
+  margin-left: 4rem;
+  text-align: center;
+}
+
+@media (max-width: 440px) {
+  .UserName {
+    display: block;
+    margin: 5rem 0 0 0;
+  }
+  .ImageContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
