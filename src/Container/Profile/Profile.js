@@ -59,7 +59,21 @@ class Profile extends Component {
           {[profile.firstName, profile.lastName].join(" ")}
         </h1>
 
-        <Container style={{ marginTop: "120px" }}>
+        <Container style={{ marginTop: "30px" }}>
+          {profile.isAdmin ? (
+            <React.Fragment>
+              <Button color="green" size="large">
+                Add Product
+              </Button>
+              <Button color="blue" size="large">
+                Manage Products
+              </Button>
+            </React.Fragment>
+          ) : null}
+          <br />
+          <br />
+          <br />
+          <br />
           <Grid>
             <Grid.Row columns={2}>
               <Grid.Column computer={6}>
