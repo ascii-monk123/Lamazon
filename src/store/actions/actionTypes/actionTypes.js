@@ -1,5 +1,6 @@
 export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
+export const ADD_PRODUCT = "ADD_PRODUCT";
 
 export const GET_PRODUCT_INFO = "GET_PRODUCT_INFO";
 

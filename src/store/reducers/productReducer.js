@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes/actionTypes";
+import diffProductFinder from "../../helpers/diffProductFinder";
 let storage = null;
 if (!localStorage.getItem("products")) {
   localStorage.setItem(
@@ -99,6 +100,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         products: updatedProducts2,
+      };
+
+    case actionTypes.ADD_PRODUCT:
+      const diffProd = diffProductFinder(action.products, action.localProducts);
+
+      if (diffProd) {
+        localStorage.setItem(
+          "products",
+          JSON.stringify({
+            ...state,
+            products: state.products.concat(diffProd),
+          })
+        );
+        return {
+          ...state,
+          products: state.products.concat(diffProd),
+        };
+      }
+      return {
+        ...state,
       };
 
     default:

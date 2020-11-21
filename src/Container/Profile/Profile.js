@@ -58,13 +58,18 @@ class Profile extends Component {
         <h1 className={Classes.UserName}>
           {[profile.firstName, profile.lastName].join(" ")}
         </h1>
+        {}
 
         <Container style={{ marginTop: "30px" }}>
           {profile.isAdmin ? (
             <React.Fragment>
-              <Button color="green" size="large">
-                Add Product
-              </Button>
+              <NavLink to="/Add-Product">
+                {" "}
+                <Button color="green" size="large">
+                  Add Product
+                </Button>
+              </NavLink>
+
               <Button color="blue" size="large">
                 Manage Products
               </Button>

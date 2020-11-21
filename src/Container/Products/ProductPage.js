@@ -16,11 +16,19 @@ class ProductPage extends Component {
     window.addEventListener("resize", this.updateWindowDimensions);
     if (this.props.products && !this.props.localProducts) {
       this.props.getProducts(this.props.products);
+    } else if (this.props.products && this.props.localProducts) {
+      if (this.props.localProducts.length < this.props.products.length) {
+        this.props.addProduct(this.props.products, this.props.localProducts);
+      }
     }
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.props.products && !this.props.localProducts) {
       this.props.getProducts(this.props.products);
+    } else if (this.props.products && this.props.localProducts) {
+      if (this.props.localProducts.length < this.props.products.length) {
+        this.props.addProduct(this.props.products, this.props.localProducts);
+      }
     }
   }
   componentWillUnmount() {
@@ -81,6 +89,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (products) => dispatch(actions.getProducts(products)),
+    addProduct: (products, localProducts) =>
+      dispatch(actions.addLocalProduct(products, localProducts)),
   };
 };
 export default compose(
