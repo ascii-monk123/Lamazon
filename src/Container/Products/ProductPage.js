@@ -19,6 +19,11 @@ class ProductPage extends Component {
     } else if (this.props.products && this.props.localProducts) {
       if (this.props.localProducts.length < this.props.products.length) {
         this.props.addProduct(this.props.products, this.props.localProducts);
+      } else if (this.props.localProducts.length > this.props.products.length) {
+        this.props.deleteProducts(
+          this.props.products,
+          this.props.localProducts
+        );
       }
     }
   }
@@ -28,6 +33,11 @@ class ProductPage extends Component {
     } else if (this.props.products && this.props.localProducts) {
       if (this.props.localProducts.length < this.props.products.length) {
         this.props.addProduct(this.props.products, this.props.localProducts);
+      } else if (this.props.localProducts.length > this.props.products.length) {
+        this.props.deleteProducts(
+          this.props.products,
+          this.props.localProducts
+        );
       }
     }
   }
@@ -91,6 +101,9 @@ const mapDispatchToProps = (dispatch) => {
     getProducts: (products) => dispatch(actions.getProducts(products)),
     addProduct: (products, localProducts) =>
       dispatch(actions.addLocalProduct(products, localProducts)),
+    deleteProducts: (products, localProducts) => {
+      dispatch({ type: "DELETE_EXTRA_LOCAL", products, localProducts });
+    },
   };
 };
 export default compose(

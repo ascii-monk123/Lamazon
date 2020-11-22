@@ -137,6 +137,27 @@ const reducer = (state = initialState, action) => {
         products: newProds,
       };
 
+    case "DELETE_EXTRA_LOCAL":
+      const filteredProds = action.localProducts.filter((prods) => {
+        const index = action.products.findIndex((item) => item.id === prods.id);
+        if (index !== -1) {
+          return true;
+        }
+        return false;
+      });
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: filteredProds,
+        })
+      );
+
+      return {
+        ...state,
+        products: filteredProds,
+      };
+
     default:
       return {
         ...state,
