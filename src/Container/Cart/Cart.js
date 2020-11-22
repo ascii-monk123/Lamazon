@@ -26,6 +26,25 @@ class Cart extends Component {
       this.props.history.push("/signIn");
     }
   };
+  componentDidMount() {
+    if (
+      this.props.cart &&
+      this.props.products &&
+      this.props.cart.length > 0 &&
+      this.props.products.length > 0
+    ) {
+      const diffProd = this.props.cart.filter((item) => {
+        const index = this.props.products.findIndex(
+          (product) => product.id === item.id
+        );
+        if (index === -1) return true;
+        return false;
+      });
+      if (diffProd.length > 0) {
+        this.props.removeDelProds(diffProd);
+      }
+    }
+  }
   render() {
     const { cart } = this.props;
 
@@ -142,7 +161,14 @@ const mapStateToProps = (state) => {
     shipping: state.cart.shippingCharges,
     checkoutPrice: state.cart.checkoutPrice,
     auth: state.firebase.auth,
+    products: state.products.products,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeDelProds: (prods) =>
+      dispatch({ type: "CLEAR_DELETED_ITEMS", delProds: prods }),
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

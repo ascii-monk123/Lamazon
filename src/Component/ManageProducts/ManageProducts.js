@@ -1,12 +1,38 @@
 import React, { Component } from "react";
 import Classes from "./ManageProducts.module.scss";
-import { Card, Icon, Image, Container } from "semantic-ui-react";
+import { Icon, Button, Modal, Header } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import uniqid from "uniqid";
+import * as actions from "../../store/actions/actionCreaters/exporter";
 
 class ManageProducts extends Component {
+  state = {
+    showModal: false,
+    selectedProduct: null,
+  };
+  showModal = () => {
+    this.setState({
+      showModal: true,
+    });
+  };
+  closeModal = () => {
+    this.setState({
+      showModal: false,
+    });
+  };
+  productSelected = (productId) => {
+    this.setState({
+      selectedProduct: productId,
+    });
+    this.showModal();
+  };
+  deleteProduct = () => {
+    this.closeModal();
+    this.props.removeProduct(this.state.selectedProduct);
+  };
   render() {
     const { products } = this.props;
     let prods = (
@@ -42,56 +68,39 @@ class ManageProducts extends Component {
     );
     if (products) {
       prods = (
-        <div className={Classes.Grid}>
-          <div className={Classes.Card}>
-            <div className={Classes.CardImage}>
-              <img
-                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-                alt="image not available"
-              />
-            </div>
-            <div className={Classes.CardContent}>
-              <h3 className={Classes.CardTitle}></h3>
-              <p className={Classes.CardContent}></p>
-            </div>
+        <ReactCSSTransitionGroup
+          transitionName="appear"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={500}
+          classnames={{
+            enterActive: Classes["appear-enter-active"],
+            exitActive: Classes["appear-exit-active"],
+          }}
+        >
+          <div className={Classes.Grid}>
+            {products.map((product) => (
+              <div className={Classes.Card} key={uniqid()}>
+                <div className={Classes.CardImage}>
+                  <img src={product.images[0]} alt="image not available" />
+                </div>
+                <div className={Classes.CardContent}>
+                  <h3 className={Classes.CardTitle}>{product.company}</h3>
+                  <p className={Classes.CardContent}>{product.title}</p>
+                  <hr />
+                  <Button
+                    color="red"
+                    size="small"
+                    onClick={() => {
+                      this.productSelected(product.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className={Classes.Card}>
-            <div className={Classes.CardImage}>
-              <img
-                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-                alt="image not available"
-              />
-            </div>
-            <div className={Classes.CardContent}>
-              <h3 className={Classes.CardTitle}></h3>
-              <p className={Classes.CardContent}></p>
-            </div>
-          </div>
-          <div className={Classes.Card}>
-            <div className={Classes.CardImage}>
-              <img
-                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-                alt="image not available"
-              />
-            </div>
-            <div className={Classes.CardContent}>
-              <h3 className={Classes.CardTitle}></h3>
-              <p className={Classes.CardContent}></p>
-            </div>
-          </div>
-          <div className={Classes.Card}>
-            <div className={Classes.CardImage}>
-              <img
-                src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-                alt="image not available"
-              />
-            </div>
-            <div className={Classes.CardContent}>
-              <h3 className={Classes.CardTitle}></h3>
-              <p className={Classes.CardContent}></p>
-            </div>
-          </div>
-        </div>
+        </ReactCSSTransitionGroup>
       );
     }
     return (
@@ -100,6 +109,35 @@ class ManageProducts extends Component {
         <br />
         <br />
         {prods}
+        <Modal
+          closeIcon
+          open={this.state.showModal}
+          onClose={() => this.closeModal()}
+          onOpen={() => this.showModal()}
+        >
+          <Header icon="archive" content="Delete Product" />
+          <Modal.Content>
+            <p>Are you sure u want to delete this product ?</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              color="red"
+              onClick={() => {
+                this.closeModal();
+              }}
+            >
+              <Icon name="remove" /> No
+            </Button>
+            <Button
+              color="green"
+              onClick={() => {
+                this.deleteProduct();
+              }}
+            >
+              <Icon name="checkmark" /> Yes
+            </Button>
+          </Modal.Actions>
+        </Modal>
       </React.Fragment>
     );
   }
@@ -111,7 +149,13 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeProduct: (productId) => dispatch(actions.deleteProduct(productId)),
+  };
+};
+
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   firestoreConnect([{ collection: "products" }])
 )(ManageProducts);

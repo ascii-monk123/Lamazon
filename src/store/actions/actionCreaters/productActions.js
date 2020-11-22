@@ -54,3 +54,20 @@ export const addLocalProduct = (products, localProducts) => {
     });
   };
 };
+
+export const deleteProduct = (productId) => {
+  return (dispatch, getStore, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    firestore
+      .collection("products")
+      .doc(productId)
+      .delete()
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: actionTypes.REMOVE_PRODUCT, prodId: productId });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

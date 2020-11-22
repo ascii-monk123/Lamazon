@@ -7,6 +7,7 @@ export {
   clearAllCart,
   addProduct,
   addLocalProduct,
+  deleteProduct,
 } from "./productActions";
 export {
   addToCart,

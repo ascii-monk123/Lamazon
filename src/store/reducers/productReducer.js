@@ -121,6 +121,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case actionTypes.REMOVE_PRODUCT:
+      const newProds = state.products.filter(
+        (product) => product.id !== action.prodId
+      );
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: newProds,
+        })
+      );
+      return {
+        ...state,
+        products: newProds,
+      };
 
     default:
       return {

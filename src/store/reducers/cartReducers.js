@@ -164,6 +164,40 @@ const reducer = (state = initialState, action) => {
         shippingCharges: "10",
         checkoutPrice: "0.00",
       };
+    case actionTypes.CLEAR_DELETED_ITEMS:
+      let total = parseFloat(state.totalPrice);
+      let check = parseFloat(state.checkoutPrice);
+      let totalProds = state.total;
+      const { delProds } = action;
+      delProds.forEach((product) => {
+        total -= parseFloat(product.price) * parseFloat(product.quantity);
+        check = total + parseFloat(state.shippingCharges);
+        totalProds--;
+      });
+      const newProds = state.cart.filter((item) => {
+        const index = delProds.findIndex((prod) => prod.id === item.id);
+        if (index !== -1) {
+          return false;
+        }
+        return true;
+      });
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          ...state,
+          total: totalProds,
+          totalPrice: total.toFixed(2),
+          checkoutPrice: check.toFixed(2),
+          cart: [...newProds],
+        })
+      );
+      return {
+        ...state,
+        total: totalProds,
+        totalPrice: total.toFixed(2),
+        checkoutPrice: check.toFixed(2),
+        cart: [...newProds],
+      };
     default: {
       return { ...state };
     }
