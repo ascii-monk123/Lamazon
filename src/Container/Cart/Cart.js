@@ -27,12 +27,33 @@ class Cart extends Component {
     }
   };
   componentDidMount() {
+    console.log("Inside");
     if (
       this.props.cart &&
       this.props.products &&
       this.props.cart.length > 0 &&
       this.props.products.length > 0
     ) {
+      const diffProd = this.props.cart.filter((item) => {
+        const index = this.props.products.findIndex(
+          (product) => product.id === item.id
+        );
+        if (index === -1) return true;
+        return false;
+      });
+      if (diffProd.length > 0) {
+        this.props.removeDelProds(diffProd);
+      }
+    }
+  }
+  componentDidUpdate() {
+    if (
+      this.props.cart &&
+      this.props.products &&
+      this.props.cart.length > 0 &&
+      this.props.products.length > 0
+    ) {
+      console.log("Inside");
       const diffProd = this.props.cart.filter((item) => {
         const index = this.props.products.findIndex(
           (product) => product.id === item.id
