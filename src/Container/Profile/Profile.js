@@ -69,10 +69,12 @@ class Profile extends Component {
                   Add Product
                 </Button>
               </NavLink>
-
-              <Button color="blue" size="large">
-                Manage Products
-              </Button>
+              <NavLink to="/Manage-Products">
+                {" "}
+                <Button color="blue" size="large">
+                  Manage Products
+                </Button>
+              </NavLink>
             </React.Fragment>
           ) : null}
           <br />
