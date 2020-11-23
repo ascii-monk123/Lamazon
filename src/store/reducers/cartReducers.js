@@ -213,7 +213,6 @@ const reducer = (state = initialState, action) => {
         };
         const cartItems = [...state.cart];
         cartItems[index] = reqItem[0];
-        console.log(reqItem[0]);
         const nPrice =
           parseFloat(state.totalPrice) -
           parseFloat(state.cart[index].price) * reqItem[0].quantity +

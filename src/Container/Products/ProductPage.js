@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Classes from "./ProductPage.module.scss";
-import { Container } from "semantic-ui-react";
+import { Container, Button, Modal } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import ProductList from "./ProductList/ProductList";
 import { Dimmer, Loader } from "semantic-ui-react";
 import * as actions from "../../store/actions/actionCreaters/exporter";
+import { NotificationManager } from "react-notifications";
 
 class ProductPage extends Component {
   state = { width: 0 };
@@ -49,6 +50,12 @@ class ProductPage extends Component {
       width: window.innerWidth,
     });
   };
+  clickHandler = () => {
+    this.props.clearCart();
+    this.props.clearStatus();
+    this.props.getProducts(this.props.products);
+    NotificationManager.info("Fetched latest Products", "Hurray!", 1000);
+  };
   render() {
     const Spinner = (
       <Container>
@@ -64,6 +71,9 @@ class ProductPage extends Component {
         <Container>
           <br />
           <br />
+          <Button color="blue" onClick={this.clickHandler}>
+            Fetch Updated Products
+          </Button>
           <div className="ui horizontal divider">
             <h1
               style={{
@@ -104,6 +114,8 @@ const mapDispatchToProps = (dispatch) => {
     deleteProducts: (products, localProducts) => {
       dispatch({ type: "DELETE_EXTRA_LOCAL", products, localProducts });
     },
+    clearCart: () => dispatch(actions.clearCart()),
+    clearStatus: () => dispatch(actions.clearAllCart()),
   };
 };
 export default compose(
