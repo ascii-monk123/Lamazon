@@ -16,5 +16,5 @@ export {
   clearCart,
 } from "./cartActions";
 export { signIn, signOut, signUp } from "./authActions";
-export { createOrder, fetchOrders } from "./orderActions";
+export { createOrder, fetchOrders, cancelOrder } from "./orderActions";
 export { updateProfile } from "./profileActions";

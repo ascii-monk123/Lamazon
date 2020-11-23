@@ -33,7 +33,7 @@ class Orders extends Component {
             <Container>
               {orders.length > 0
                 ? orders.map((order) => (
-                    <OrderCard key={uniqid()} order={order} />
+                    <OrderCard key={uniqid()} order={order} id={order.id} />
                   ))
                 : null}
             </Container>

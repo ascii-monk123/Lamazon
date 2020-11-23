@@ -11,6 +11,7 @@ const makeOrderFormat = (order, id, products, total) => {
       phone: order.phoneNumber,
       state: order.state,
       zipCode: order.zipCode,
+      cancelled: false,
     },
     products: products,
     userid: id,

@@ -30,6 +30,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         orders: action.orders,
       };
+    case actionTypes.CANCEL_ORDER:
+      console.log("Order has been cancelled");
+      return {
+        ...state,
+      };
     default:
       return {
         ...state,

@@ -1,5 +1,5 @@
 import * as actionTypes from "../actionTypes/actionTypes";
-
+import { NotificationManager } from "react-notifications";
 export const setProducts = (products) => {
   return {
     type: actionTypes.FETCH_PRODUCTS,
@@ -37,6 +37,11 @@ export const addProduct = (product) => {
       .collection("products")
       .add({ ...product })
       .then((res) => {
+        NotificationManager.success(
+          "Product added successfully !!",
+          "Added",
+          1000
+        );
         console.log(res);
       })
       .catch((err) => {
@@ -64,6 +69,11 @@ export const deleteProduct = (productId) => {
       .delete()
       .then((res) => {
         console.log(res);
+        NotificationManager.error(
+          "Product removed successfully",
+          "Product Removed",
+          1000
+        );
         dispatch({ type: actionTypes.REMOVE_PRODUCT, prodId: productId });
       })
       .catch((err) => {
