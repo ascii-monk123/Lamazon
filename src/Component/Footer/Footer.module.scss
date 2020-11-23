@@ -1,0 +1,19 @@
+$color-green: #7bed9f;
+.Footer {
+  margin-top: 5rem;
+  width: 100%;
+  background: $color-green;
+  color: #fff;
+  min-height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+  .SmallText {
+    font-size: 1.3rem;
+  }
+}

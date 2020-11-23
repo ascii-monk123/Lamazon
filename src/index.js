@@ -21,6 +21,7 @@ import fbconfig from "./config/fbconfig";
 import rootReducer from "./store/reducers/rootReducer";
 import thunk from "redux-thunk";
 import { BrowserRouter } from "react-router-dom";
+import Spinner from "./Component/UI/Spinner/Spinner";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
@@ -43,7 +44,7 @@ const rrfProps = {
 
 const AuthLoaded = ({ children }) => {
   const auth = useSelector((state) => state.firebase.auth);
-  if (!isLoaded(auth)) return <div>Loading the app....</div>;
+  if (!isLoaded(auth)) return <Spinner />;
   return children;
 };
 
