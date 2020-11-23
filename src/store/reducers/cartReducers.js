@@ -15,7 +15,7 @@ if (!localStorage.getItem("cart")) {
     cart: [],
     total: 0,
     totalPrice: "0.0",
-    shippingCharges: "200",
+    shippingCharges: "10",
     checkoutPrice: "0.00",
   };
 } else {

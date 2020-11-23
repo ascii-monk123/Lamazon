@@ -27,7 +27,6 @@ class Cart extends Component {
     }
   };
   componentDidMount() {
-    console.log("Inside");
     if (
       this.props.cart &&
       this.props.products &&
