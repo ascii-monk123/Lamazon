@@ -33,6 +33,13 @@ class ManageProducts extends Component {
     this.closeModal();
     this.props.removeProduct(this.state.selectedProduct);
   };
+  editProduct = (id) => {
+    this.props.history.push({
+      pathname: "/edit-product",
+      search: `id=${id}`,
+      state: { id: id },
+    });
+  };
   render() {
     const { products } = this.props;
     let prods = (
@@ -95,6 +102,13 @@ class ManageProducts extends Component {
                     }}
                   >
                     Delete
+                  </Button>
+                  <Button
+                    color="green"
+                    size="small"
+                    onClick={() => this.editProduct(product.id)}
+                  >
+                    Edit Product
                   </Button>
                 </div>
               </div>

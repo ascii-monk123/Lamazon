@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 import Classes from "./AddProduct.module.scss";
-import { Container, Form, Input, Button } from "semantic-ui-react";
+import { Container, Form, Input, Button, Select } from "semantic-ui-react";
 import validator from "../../helpers/addProductValidator";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/actionCreaters/exporter";
 
+const options = [
+  { key: "electronics", value: "electronics", text: "Electronics" },
+  { key: "Games", value: "Games", text: "Games" },
+  { key: "Sports", value: "Sports", text: "Sports" },
+  { key: "Books", value: "Books", text: "Books" },
+  { key: "Lifestyle", value: "Lifestyle", text: "Life-Style" },
+  { key: "Pet", value: "Pet", text: "Pet" },
+  { key: "clothing", value: "clothing", text: "Clothing" },
+];
 class AddProduct extends Component {
   state = {
     formData: {
@@ -113,22 +122,26 @@ class AddProduct extends Component {
             </Form.Group>
             <br />
             <Form.Group widths="equal">
-              <Form.Field
-                label="Select Product Type"
-                control="select"
-                name="type"
-                required
-                value={this.state.formData.type}
-                onChange={this.onChangeHandler}
-              >
-                <option value="Games">Games</option>
-                <option value="electronics">Electronics</option>
-                <option value="Sports">Sports</option>
-                <option value="clothing">Clothing</option>
-                <option value="Lifestyle">Life-Style</option>
-                <option value="Books">Books</option>
-                <option value="Pet">Pet</option>
+              <Form.Field>
+                <Select
+                  label="Select Product Type"
+                  control="select"
+                  name="type"
+                  key="type"
+                  required
+                  value={this.state.formData.type}
+                  options={options}
+                  onChange={(e, { value }) => {
+                    this.setState({
+                      formData: {
+                        ...this.state.formData,
+                        type: value,
+                      },
+                    });
+                  }}
+                ></Select>
               </Form.Field>
+
               <Form.Field required>
                 <label>Contry Of Origin</label>
                 <Input

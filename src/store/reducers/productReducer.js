@@ -158,6 +158,28 @@ const reducer = (state = initialState, action) => {
         products: filteredProds,
       };
 
+    case actionTypes.UPDATE_PRODUCT:
+      const reqProd = state.products.filter(
+        (product) => product.id === action.product.id
+      );
+      reqProd[0] = { ...reqProd[0], ...action.product };
+      const index = state.products.findIndex(
+        (product) => product.id === action.product.id
+      );
+      const newPros = [...state.products];
+      newPros[index] = reqProd[0];
+      localStorage.setItem(
+        "products",
+        JSON.stringify({
+          ...state,
+          products: newPros,
+        })
+      );
+      return {
+        ...state,
+        products: newPros,
+      };
+
     default:
       return {
         ...state,

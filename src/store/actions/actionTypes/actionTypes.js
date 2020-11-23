@@ -2,10 +2,12 @@ export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 export const GET_PRODUCT_INFO = "GET_PRODUCT_INFO";
 
 export const ADD_TO_CART = "ADD_TO_CART";
+export const UPDATE_CART = "UPDATE_CART";
 
 export const ADDED_TO_CART = "ADDED_TO_CART";
 

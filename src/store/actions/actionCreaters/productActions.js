@@ -35,7 +35,11 @@ export const addProduct = (product) => {
     const firestore = getFirestore();
     firestore
       .collection("products")
-      .add({ ...product })
+      .add({
+        ...product,
+        launched: new Date(),
+        weight: product.weight.toString() + "g",
+      })
       .then((res) => {
         NotificationManager.success(
           "Product added successfully !!",
@@ -78,6 +82,36 @@ export const deleteProduct = (productId) => {
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+};
+
+export const updateProduct = (product, id) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    firestore
+      .collection("products")
+      .doc(id)
+      .update({ ...product, weight: product.weight.toString() + "g" })
+      .then((res) => {
+        console.log("Product Updated");
+        NotificationManager.success(
+          "Product Updated Successfully",
+          "Success",
+          1000
+        );
+        dispatch({
+          type: actionTypes.UPDATE_PRODUCT,
+          product: { ...product, id: id },
+        });
+        dispatch({
+          type: actionTypes.UPDATE_CART,
+          product: { ...product, id: id },
+        });
+      })
+      .catch((err) => {
+        console.log("product not updated");
+        NotificationManager.error("Unable to update product", "Error", 1000);
       });
   };
 };

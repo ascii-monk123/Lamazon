@@ -11,6 +11,7 @@ import OrderNotPlaced from "../Component/OrderNotPlaced";
 import Profile from "../Container/Profile/Profile";
 import AddProduct from "../Component/Add Product/AddProduct";
 import ManageProducts from "../Component/ManageProducts/ManageProducts";
+import EditProduct from "../Component/EditProduct/EditProduct";
 
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
         <Route path="/Profile" component={Profile} />
         <Route path="/Add-Product" exact component={AddProduct} />
         <Route path="/Manage-Products" exact component={ManageProducts} />
+        <Route path="/edit-product" exact component={EditProduct} />
       </Switch>
     </React.Fragment>
   );

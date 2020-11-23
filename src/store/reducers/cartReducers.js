@@ -198,6 +198,46 @@ const reducer = (state = initialState, action) => {
         checkoutPrice: check.toFixed(2),
         cart: [...newProds],
       };
+    case actionTypes.UPDATE_CART:
+      if (state.cart.length > 0) {
+        const reqItem = state.cart.filter(
+          (item) => item.id === action.product.id
+        );
+        const index = state.cart.findIndex(
+          (item) => item.id === action.product.id
+        );
+        reqItem[0] = {
+          ...reqItem[0],
+          ...action.product,
+          quantity: reqItem[0].quantity,
+        };
+        const cartItems = [...state.cart];
+        cartItems[index] = reqItem[0];
+        console.log(reqItem[0]);
+        const nPrice =
+          parseFloat(state.totalPrice) -
+          parseFloat(state.cart[index].price) * reqItem[0].quantity +
+          parseFloat(action.product.price) * reqItem[0].quantity;
+        const nTotal = nPrice + parseFloat(state.shippingCharges);
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            ...state,
+            cart: cartItems,
+            totalPrice: nPrice.toFixed(2),
+            checkoutPrice: nTotal.toFixed(2),
+          })
+        );
+        return {
+          ...state,
+          cart: cartItems,
+          totalPrice: nPrice.toFixed(2),
+          checkoutPrice: nTotal.toFixed(2),
+        };
+      }
+      return {
+        ...state,
+      };
     default: {
       return { ...state };
     }
